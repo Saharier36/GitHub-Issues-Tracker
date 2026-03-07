@@ -66,11 +66,29 @@ const priorityColor = (priority) => {
   }
 };
 
-
-
-
-
-
+const labelColor = (label) => {
+  if (label.toLowerCase() === "bug") {
+    return {
+      color: "text-red-600 bg-red-100",
+      icon: '<i class="fa-solid fa-bug"></i>',
+    };
+  } else if (label.toLowerCase() === "help wanted") {
+    return {
+      color: "text-yellow-600 bg-yellow-100",
+      icon: '<i class="fa-solid fa-bullseye"></i>',
+    };
+  } else if (label.toLowerCase() === "enhancement") {
+    return {
+      color: "text-green-600 bg-green-100",
+      icon: '<i class="fa-solid fa-star-half-stroke"></i>',
+    };
+  } else if (label.toLowerCase() === "documentation") {
+    return {
+      color: "text-gray-600 bg-gray-100",
+      icon: '<i class="fa-solid fa-file-alt"></i>',
+    };
+  }
+};
 
 const loadIssues = () => {
   const issuesContainer = document.getElementById("issues-container");
@@ -110,8 +128,15 @@ const displayIssues = (issues) => {
           <h3 class="font-semibold text-lg">${issue.title}</h3>
           <p class="text-[#64748B]">${issue.description}</p>
 
-          <div class="flex items-center gap-1">
-            ${issue.labels.map((label) => `<p class="border px-2 rounded-full">${label}</p>`).join("")}
+          <div class="flex flex-wrap items-center gap-1">
+            ${issue.labels
+              .map((label) => {
+                const result = labelColor(label);
+                if (!result) return "";
+                const { color, icon } = result;
+                return `<p class="border px-2 rounded-full ${color}">${icon} ${label.toUpperCase()}</p>`;
+              })
+              .join("")}
           </div>
 
           <hr class="w-full opacity-25" />

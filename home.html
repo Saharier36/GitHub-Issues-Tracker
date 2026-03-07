@@ -4,8 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GitHub Issues Tracker - Dashboard</title>
-    <!-- CSS -->
-    <link rel="stylesheet" href="./style.css" />
     <!-- favicon -->
     <link
       rel="shortcut icon"
@@ -37,12 +35,37 @@
       href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
       rel="stylesheet"
     />
+    <!-- CSS -->
+    <link rel="stylesheet" href="./style.css" />
   </head>
 
-  <body class="geist bg-[#F8FAFC]">
+  <body class="geist bg-[#F8FAFC] min-h-screen">
+    <header>
+      <div class="navbar bg-white shadow-sm flex justify-between">
+        <div class="flex items-center gap-2">
+          <img class="w-10" src="./assets/github-logo.png" alt="" />
+          <h3 class="text-[#1F2937] font-bold text-xl">
+            GitHub Issues Tracker
+          </h3>
+        </div>
 
-    <h1>HELLO WORLD</h1>
+        <!-- search box -->
+        <div class="flex gap-2">
+          <input
+            type="text"
+            placeholder="Search"
+            class="input input-bordered w-24 md:w-auto"
+          />
 
+          <button class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i>
+            <span class="hidden md:inline">New Issue</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    
     <script src="./script.js"></script>
   </body>
 </html>

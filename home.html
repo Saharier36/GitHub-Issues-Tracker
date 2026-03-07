@@ -39,33 +39,103 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
 
-  <body class="geist bg-[#F8FAFC] min-h-screen">
+  <body class="geist text-[#1F2937] bg-[#F8FAFC] min-h-screen">
     <header>
-      <div class="navbar bg-white shadow-sm flex justify-between">
+      <div class="navbar bg-white shadow-sm flex justify-between md:px-6">
         <div class="flex items-center gap-2">
           <img class="w-10" src="./assets/github-logo.png" alt="" />
-          <h3 class="text-[#1F2937] font-bold text-xl">
-            GitHub Issues Tracker
-          </h3>
+          <h3 class="font-bold text-xl">GitHub Issues Tracker</h3>
         </div>
 
         <!-- search box -->
         <div class="flex gap-2">
           <input
+            id="search-input"
             type="text"
-            placeholder="Search"
+            placeholder="Search issues"
             class="input input-bordered w-24 md:w-auto"
           />
 
-          <button class="btn btn-primary">
-            <i class="fa-solid fa-plus"></i>
-            <span class="hidden md:inline">New Issue</span>
+          <button onclick="searchIssues()" class="btn btn-primary">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span class="hidden md:inline">Search</span>
           </button>
         </div>
       </div>
     </header>
+    <!-- tab -->
+    <section
+      class="mt-10 w-11/12 bg-white shadow-sm rounded-lg p-6 mx-auto flex gap-4"
+    >
+      <button
+        onclick="switchTab('all')"
+        id="tab-all"
+        class="btn btn-primary md:w-26"
+      >
+        All
+      </button>
+      <button
+        onclick="switchTab('open')"
+        id="tab-open"
+        class="btn md:w-26 text-[#64748B]"
+      >
+        Open
+      </button>
+      <button
+        onclick="switchTab('closed')"
+        id="tab-closed"
+        class="btn md:w-26 text-[#64748B]"
+      >
+        Closed
+      </button>
+    </section>
 
-    
+    <!-- issue count -->
+    <section class="mt-6 w-11/12 bg-white shadow-sm rounded-t-lg p-6 mx-auto">
+      <div class="bg-white w-full flex justify-between gap-2">
+        <div class="flex justify-center items-center gap-2">
+          <div class="bg-purple-200 p-2 rounded-full">
+            <img src="./assets/Aperture.png" alt="" />
+          </div>
+          <div>
+            <h2 id="issue-count" class="font-bold text-xl">0 Issues</h2>
+            <p class="text-[#64748B]">Track and manage your project issues</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 text-sm">
+          <p><i class="fa-solid fa-circle text-green-600"></i> Open</p>
+          <p><i class="fa-solid fa-circle text-purple-600"></i> Closed</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- issues -->
+    <section
+      class="w-11/12 bg-[#FBFBFB] shadow-sm rounded-b-lg p-6 mx-auto border-t-2 border-gray-200"
+    >
+      <div
+        id="issues-container"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+      >
+        <!-- cards -->
+      </div>
+    </section>
+
+    <!-- modal -->
+    <!-- Open the modal using ID.showModal() method -->
+    <!-- <button class="btn" onclick="my_modal_1.showModal()">open modal</button> -->
+    <dialog id="issue-modal" class="modal">
+      <div class="modal-box">
+        <div class="modal-action">
+          <form method="dialog">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="btn">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+
     <script src="./script.js"></script>
   </body>
 </html>

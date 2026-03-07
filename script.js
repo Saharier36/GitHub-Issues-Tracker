@@ -80,7 +80,7 @@ const labelColor = (label) => {
   } else if (label.toLowerCase() === "enhancement") {
     return {
       color: "text-green-600 bg-green-100",
-      icon: '<i class="fa-solid fa-star-half-stroke"></i>',
+      icon: '<i class="fa-solid fa-diamond"></i>',
     };
   } else if (label.toLowerCase() === "documentation") {
     return {
@@ -110,6 +110,9 @@ const loadIssues = () => {
 };
 
 const displayIssues = (issues) => {
+  const issueCount = document.getElementById("issue-count");
+  issueCount.innerText = issues.length + " Issues";
+
   const issuesContainer = document.getElementById("issues-container");
   issuesContainer.innerHTML = "";
 

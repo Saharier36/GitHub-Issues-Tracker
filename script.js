@@ -67,6 +67,11 @@ const priorityColor = (priority) => {
 };
 
 
+
+
+
+
+
 const loadIssues = () => {
   const issuesContainer = document.getElementById("issues-container");
   issuesContainer.innerHTML = `<div class="col-span-full text-center py-10">
@@ -106,12 +111,7 @@ const displayIssues = (issues) => {
           <p class="text-[#64748B]">${issue.description}</p>
 
           <div class="flex items-center gap-1">
-            <p class="text-red-600 border-1 bg-red-100 px-2 rounded-full">
-              <i class="fa-solid fa-bug"></i> ${issue.labels}
-            </p>
-            <p class="text-yellow-600 border-1 bg-yellow-100 px-2 rounded-full">
-              <i class="fa-solid fa-bullseye"></i> ${issue.labels}
-            </p>
+            ${issue.labels.map((label) => `<p class="border px-2 rounded-full">${label}</p>`).join("")}
           </div>
 
           <hr class="w-full opacity-25" />

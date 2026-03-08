@@ -26,21 +26,6 @@ const switchTab = (tab) => {
   loadIssues();
 };
 
-// {
-//     "id": 1,
-//     "title": "Fix navigation menu on mobile devices",
-//     "description": "The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.",
-//     "status": "open",
-//     "labels": [
-//         "bug",
-//         "help wanted"
-//     ],
-//     "priority": "high",
-//     "author": "john_doe",
-//     "assignee": "jane_smith",
-//     "createdAt": "2024-01-15T10:30:00Z",
-//     "updatedAt": "2024-01-15T10:30:00Z"
-// }
 const loadIssues = async () => {
   const issuesContainer = document.getElementById("issues-container");
   issuesContainer.innerHTML = `<div class="col-span-full text-center py-10">
@@ -121,7 +106,48 @@ const issueModal = async (id) => {
 
 const displayIssuesDetails = (issue) => {
   const modalContent = document.getElementById("modal-content");
-  // modalContent.innerHTML = ``;
+  modalContent.innerHTML = `
+  <div class="space-y-6">
+            <h1 class="text-2xl font-bold">${issue.title}</h1>
+            <div class="md:flex items-center gap-2">
+              <span class="text-white bg-[#00A96E] px-3 py-1 rounded-full"
+                >Opened</span
+              >
+              <p class="text-[#64748B] mt-2 md:mt-0">• Opened by ${issue.author}</p>
+              <p class="text-[#64748B]">• ${new Date(issue.createdAt).toLocaleDateString()}</p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-1">
+              ${issue.labels
+                .map((label) => {
+                  const result = labelColor(label);
+                  if (!result) return "";
+                  const { color, icon } = result;
+                  return `
+              <p class="border px-2 rounded-full ${color}">
+                ${icon} ${label.toUpperCase()}
+              </p>
+              `;
+                })
+                .join("")}
+            </div>
+
+            <p class="text-[#64748B]">
+              ${issue.description}
+            </p>
+
+            <div class="grid grid-cols-2 bg-[#F8FAFC] p-4 rounded-lg">
+              <div>
+                <p class="text-[#64748B]">Assignee:</p>
+                <p class="font-semibold">${issue.author}</p>
+              </div>
+              <div>
+                <p class="text-[#64748B]">Priority:</p>
+                <span class="px-3 rounded-full ${priorityColor(issue.priority)}">${issue.priority.toUpperCase()}</span>
+              </div>
+            </div>
+          </div>
+  `;
   document.getElementById("modal_box").showModal();
 };
 
@@ -141,7 +167,7 @@ const displayIssues = (issues) => {
     <div onclick="issueModal(${issue.id})" class="bg-white p-4 ${borderColor} rounded-md shadow-md space-y-4 h-full cursor-pointer">
           <div class="flex justify-between items-center">
             <img src="${statusImg}" alt="" />
-            <p class="px-6 rounded-full ${priorityColor(issue.priority)}">${issue.priority.toUpperCase()}</p>
+            <p class="px-3 rounded-full ${priorityColor(issue.priority)}">${issue.priority.toUpperCase()}</p>
           </div>
 
           <h3 class="font-semibold text-lg">${issue.title}</h3>

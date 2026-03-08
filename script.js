@@ -54,11 +54,15 @@ const cardUpdate = (issue) => {
     return {
       borderColor: "border-t-4 border-green-600",
       statusImg: "./assets/Open-Status.png",
+      statusText: "Opened",
+      statusColor: "bg-green-600",
     };
   } else if (issue.status === "closed") {
     return {
       borderColor: "border-t-4 border-purple-600",
       statusImg: "./assets/Closed- Status .png",
+      statusText: "Closed",
+      statusColor: "bg-purple-600",
     };
   }
 };
@@ -106,14 +110,15 @@ const issueModal = async (id) => {
 
 const displayIssuesDetails = (issue) => {
   const modalContent = document.getElementById("modal-content");
+  const { statusColor, statusText } = cardUpdate(issue);
   modalContent.innerHTML = `
   <div class="space-y-6">
             <h1 class="text-2xl font-bold">${issue.title}</h1>
             <div class="md:flex items-center gap-2">
-              <span class="text-white bg-[#00A96E] px-3 py-1 rounded-full"
-                >Opened</span
+              <span class="${statusColor} text-white px-3 py-1 rounded-full"
+                >${statusText}</span
               >
-              <p class="text-[#64748B] mt-2 md:mt-0">• Opened by ${issue.author}</p>
+              <p class="text-[#64748B] mt-2 md:mt-0">• ${statusText} by ${issue.author}</p>
               <p class="text-[#64748B]">• ${new Date(issue.createdAt).toLocaleDateString()}</p>
             </div>
 
@@ -139,7 +144,7 @@ const displayIssuesDetails = (issue) => {
             <div class="grid grid-cols-2 bg-[#F8FAFC] p-4 rounded-lg">
               <div>
                 <p class="text-[#64748B]">Assignee:</p>
-                <p class="font-semibold">${issue.author}</p>
+                <p class="font-semibold">${issue.assignee}</p>
               </div>
               <div>
                 <p class="text-[#64748B]">Priority:</p>

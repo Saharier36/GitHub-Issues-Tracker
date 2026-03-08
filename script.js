@@ -98,6 +98,11 @@ const labelColor = (label) => {
       color: "text-gray-600 bg-gray-100",
       icon: '<i class="fa-solid fa-file-alt"></i>',
     };
+  } else if (label.toLowerCase() === "good first issue") {
+    return {
+      color: "text-blue-600 bg-blue-100",
+      icon: '<i class="fa-solid fa-hand-holding-heart"></i>',
+    };
   }
 };
 

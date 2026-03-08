@@ -91,7 +91,7 @@ const labelColor = (label) => {
   } else if (label.toLowerCase() === "enhancement") {
     return {
       color: "text-green-600 bg-green-100",
-      icon: '<i class="fa-solid fa-diamond"></i>',
+      icon: '<i class="fa-solid fa-wand-magic-sparkles"></i>',
     };
   } else if (label.toLowerCase() === "documentation") {
     return {
@@ -99,6 +99,17 @@ const labelColor = (label) => {
       icon: '<i class="fa-solid fa-file-alt"></i>',
     };
   }
+};
+
+const renderLabels = (labels = []) => {
+  return labels
+    .map((label) => {
+      const res = labelColor(label);
+      return res
+        ? `<p class="border px-2 rounded-full ${res.color}">${res.icon} ${label.toUpperCase()}</p>`
+        : "";
+    })
+    .join("");
 };
 
 const issueModal = async (id) => {
@@ -123,18 +134,7 @@ const displayIssuesDetails = (issue) => {
             </div>
 
             <div class="flex flex-wrap items-center gap-1">
-              ${issue.labels
-                .map((label) => {
-                  const result = labelColor(label);
-                  if (!result) return "";
-                  const { color, icon } = result;
-                  return `
-              <p class="border px-2 rounded-full ${color}">
-                ${icon} ${label.toUpperCase()}
-              </p>
-              `;
-                })
-                .join("")}
+              ${renderLabels(issue.labels)}
             </div>
 
             <p class="text-[#64748B]">
@@ -179,14 +179,7 @@ const displayIssues = (issues) => {
           <p class="text-[#64748B]">${issue.description}</p>
 
           <div class="flex flex-wrap items-center gap-1">
-            ${issue.labels
-              .map((label) => {
-                const result = labelColor(label);
-                if (!result) return "";
-                const { color, icon } = result;
-                return `<p class="border px-2 rounded-full ${color}">${icon} ${label.toUpperCase()}</p>`;
-              })
-              .join("")}
+            ${renderLabels(issue.labels)}
           </div>
 
           <hr class="w-full opacity-25" />

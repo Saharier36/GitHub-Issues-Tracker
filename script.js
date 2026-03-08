@@ -41,6 +41,28 @@ const switchTab = (tab) => {
 //     "createdAt": "2024-01-15T10:30:00Z",
 //     "updatedAt": "2024-01-15T10:30:00Z"
 // }
+const loadIssues = async () => {
+  const issuesContainer = document.getElementById("issues-container");
+  issuesContainer.innerHTML = `<div class="col-span-full text-center py-10">
+      <span class="loading loading-spinner text-primary"></span>
+    </div>`;
+
+  const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  if (data.status === "success") {
+    if (currentTab === "all") {
+      displayIssues(data.data);
+    } else {
+      const filterData = data.data.filter(
+        (issue) => issue.status === currentTab,
+      );
+      displayIssues(filterData);
+    }
+  }
+};
 
 const cardUpdate = (issue) => {
   if (issue.status === "open") {
@@ -90,23 +112,17 @@ const labelColor = (label) => {
   }
 };
 
-const loadIssues = () => {
-  const issuesContainer = document.getElementById("issues-container");
-  issuesContainer.innerHTML = `<div class="col-span-full text-center py-10">
-      <span class="loading loading-spinner text-primary"></span>
-    </div>`;
+const issueModal = async (id) => {
+  const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+  const res = await fetch(url);
+  const details = await res.json();
+  displayIssuesDetails(details.data);
+};
 
-  fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
-    .then((res) => res.json())
-    .then((json) => {
-      if (json.status === "success") {
-        let filterData = json.data;
-        if (currentTab !== "all") {
-          filterData = json.data.filter((issue) => issue.status === currentTab);
-        }
-        displayIssues(filterData);
-      }
-    });
+const displayIssuesDetails = (issue) => {
+  const modalContent = document.getElementById("modal-content");
+  // modalContent.innerHTML = ``;
+  document.getElementById("modal_box").showModal();
 };
 
 const displayIssues = (issues) => {
@@ -122,7 +138,7 @@ const displayIssues = (issues) => {
     const issueDiv = document.createElement("div");
 
     issueDiv.innerHTML = `
-    <div class="bg-white p-4 border-t-4 ${borderColor} rounded-md shadow-md space-y-4 h-full">
+    <div onclick="issueModal(${issue.id})" class="bg-white p-4 ${borderColor} rounded-md shadow-md space-y-4 h-full cursor-pointer">
           <div class="flex justify-between items-center">
             <img src="${statusImg}" alt="" />
             <p class="px-6 rounded-full ${priorityColor(issue.priority)}">${issue.priority.toUpperCase()}</p>

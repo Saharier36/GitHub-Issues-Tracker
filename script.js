@@ -111,7 +111,7 @@ const renderLabels = (labels = []) => {
     .map((label) => {
       const res = labelColor(label);
       return res
-        ? `<p class="border px-2 rounded-full ${res.color}">${res.icon} ${label.toUpperCase()}</p>`
+        ? `<p class="border px-2 font-medium rounded-full ${res.color}">${res.icon} ${label.toUpperCase()}</p>`
         : "";
     })
     .join("");
@@ -135,7 +135,7 @@ const displayIssuesDetails = (issue) => {
                 >${statusText}</span
               >
               <p class="text-[#64748B] mt-2 md:mt-0">• ${statusText} by ${issue.author}</p>
-              <p class="text-[#64748B]">• ${new Date(issue.createdAt).toLocaleDateString()}</p>
+              <p class="text-[#64748B]">• ${new Date(issue.updatedAt).toLocaleDateString()}</p>
             </div>
 
             <div class="flex flex-wrap items-center gap-1">
@@ -153,7 +153,7 @@ const displayIssuesDetails = (issue) => {
               </div>
               <div>
                 <p class="text-[#64748B]">Priority:</p>
-                <span class="px-3 rounded-full ${priorityColor(issue.priority)}">${issue.priority.toUpperCase()}</span>
+                <span class="px-3 font-medium rounded-full ${priorityColor(issue.priority)}">${issue.priority.toUpperCase()}</span>
               </div>
             </div>
           </div>
@@ -174,10 +174,10 @@ const displayIssues = (issues) => {
     const issueDiv = document.createElement("div");
 
     issueDiv.innerHTML = `
-    <div onclick="issueModal(${issue.id})" class="bg-white p-4 ${borderColor} rounded-md shadow-md space-y-4 h-full cursor-pointer">
+    <div onclick="issueModal(${issue.id})" class="bg-white p-4 ${borderColor} rounded-md shadow-md space-y-4 h-full cursor-pointer hover:bg-[#F8FAFC]">
           <div class="flex justify-between items-center">
             <img src="${statusImg}" alt="" />
-            <p class="px-3 rounded-full ${priorityColor(issue.priority)}">${issue.priority.toUpperCase()}</p>
+            <p class="px-3 font-medium rounded-full ${priorityColor(issue.priority)}">${issue.priority.toUpperCase()}</p>
           </div>
 
           <h3 class="font-semibold text-lg">${issue.title}</h3>
@@ -201,3 +201,22 @@ const displayIssues = (issues) => {
   });
 };
 loadIssues();
+
+const searchIssues = async () => {
+  switchTab();
+
+  const searchInput = document
+    .getElementById("search-input")
+    .value.trim()
+    .toLowerCase();
+
+  const url = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchInput}`;
+
+  const res = await fetch(url);
+
+  const data = await res.json();
+  const allSearchIssues = data.data;
+  displayIssues(allSearchIssues);
+};
+
+document.getElementById("btn-search").addEventListener("click", searchIssues);

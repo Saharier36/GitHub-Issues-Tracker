@@ -203,7 +203,7 @@ const displayIssues = (issues) => {
 loadIssues();
 
 const searchIssues = async () => {
-  switchTab();
+  switchTab("all");
 
   const searchInput = document
     .getElementById("search-input")

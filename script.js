@@ -220,3 +220,8 @@ const searchIssues = async () => {
 };
 
 document.getElementById("btn-search").addEventListener("click", searchIssues);
+document.getElementById("search-input").addEventListener("keyup", (enter) => {
+  if (enter.key === "Enter") {
+    searchIssues();
+  }
+});
